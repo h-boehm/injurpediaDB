@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <%- include ("partials/header.ejs") %>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+
+<style>
+table, th, td {
+  border: 1px solid black;
+  text-align: center;
+}
+th, td {
+  padding: 6px;
+}
+</style>
+
+<body>
+  <%- include ("partials/nav.ejs") %>
+  <div class="jumbotron text-center">
+    <div class="container">
+      <h1>SubParts</h1>
+      <p>Add, update, delete, or filter subparts</p>
+    </div>
+  </div>
+  <div class="container">
+    <p>
+    Purpose: Stores the specific body parts related to the injury; a subcategory of the entity BodyParts. Aids in database organization.
+    <br></br>
+    Attributes: subpartID, subpartName, bodypartID (FK)
+    <br></br>
+    Relationships: 1:M between SubParts and Injuries, with subpartID as an FK inside Injuries. 
+    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    1:M between BodyParts and SubParts, with bodypartID as an FK inside SubParts.
+    </p>
+    <hr>
+    <div>
+    <h3>SubParts</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>SubPartID</th>
+          <th>Name</th>
+          <th>BodyPartID</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for(var i=0; i<subParts.length; i++) {%>
+        <tr>
+          <td><%= subParts[i].subpartID %></td>
+          <td><%= subParts[i].subpartName %></td>
+          <td><%= subParts[i].bodypartID %></td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+    <br>
+    <h3>Add SubPart</h3>
+      <form action="/subparts/add" method="POST">
+        &nbsp;<label>Name:</label>
+        <input type="text" name="subpartName" size="10" required>&nbsp;
+        <label>BodyPartID:</label>
+        <input type="number" name="bodypartID" size="4" required>&nbsp;
+        <button type="submit">Add</button>
+      </form>
+    <br>
+    <h3>Update SubPart</h3>
+      <form action="/subparts/update" method="POST">
+        &nbsp;<label for="input-subpartID">SubPartID:</label>
+        <input type="number" name="input-subpartID" id="input-subpartID" size="4" required>&nbsp;
+        <label for="input-subpartName">Name:</label>
+        <input type="text" name="input-subpartName" id="input-subpartName" size="10">&nbsp;
+        <label for="input-bodypartID">BodyPartID:</label>
+        <input type="number" name="input-bodypartID" id="input-bodypartID" size="4">&nbsp;
+        <button type="submit">Update</button>
+      </form>
+      <br>
+    <h3>Delete SubPart</h3>
+      <form action="/subparts/delete" method="POST">
+        &nbsp;<label>SubPartID:</label>
+        <input type="number" name="subpartID" size="4" required>&nbsp;
+        <button type="submit">Delete</button>
+      </form>
+        <br>
+    <h3>Filter (by BodyPartID)</h3>
+      <div style="display: flex;">
+        &nbsp;<form action="/subparts/filter" id="/subparts/filter" method="POST">
+        <input type="number" name="input-bodypartID" id="input-bodypartID" size="4" required>&nbsp;
+        <button type="submit">Filter</button>
+        </form>
+        <form action="/subparts/reset" id="/subparts/reset" method="POST">
+        <button type="submit">Reset</button>
+        </form>
+        </div>
+      <br><br></br>
+    </div>
+  </div>
+</body>
+
+</html>

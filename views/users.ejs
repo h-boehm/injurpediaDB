@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <%- include ("partials/header.ejs") %>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+
+<style>
+table, th, td {
+  border: 1px solid black;
+  text-align: center;
+}
+th, td {
+  padding: 6px;
+}
+</style>
+ 
+<body>
+  <%- include ("partials/nav.ejs") %>
+  <div class="jumbotron text-center">
+    <div class="container">
+      <h1>Users</h1>
+      <p>Add, update, delete, or search a user</p>
+    </div>
+  </div>
+  <div class="container">
+    <p>
+    Purpose: For creating an account, age verification, and to record user details.
+    <br></br>
+    Attributes: userID, userName, userEmail, userAge, recordID (FK)
+    <br></br>
+    Relationship: 1:M between Users and Records, with userID as an FK inside Records.
+    </p>
+    <hr>
+    <div>
+      <h3>Users</h3>
+        <table id="users-table">
+          <thead>
+            <tr>
+              <th>User ID</th>
+              <th>Name</th>
+              <th>Date of Birth</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for(var i=0; i<users.length; i++) {%>
+            <tr>
+              <td><%= users[i].userID %></td>
+              <td><%= users[i].userName %></td>
+              <td><%= users[i].userAge %></td>
+              <td><%= users[i].userEmail %></td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+        <br>
+      <h3>Add User</h3>
+        <form action="/users/add" method="POST">
+          &nbsp;<label>Name:</label>
+          <input type="text" name="userName" size="10" required>&nbsp;
+          <label>Age:</label>
+          <input type="text" name="userAge" placeholder="YYYY-MM-DD" size="10" required>&nbsp;
+          <label>Email:</label>
+          <input type="text" name="userEmail" size="15" required>&nbsp;
+          <button type="submit">Add</button>
+        </form>
+        <br>
+      <h3>Update User</h3>
+        <form id="/users/update" action="/users/update" method="POST">
+          &nbsp;<label for="input-userID">UserID:</label>
+          <input type="number" name="input-userID" id="input-userID" size="4" required>&nbsp;
+          <label for="input-userName">Name:</label>
+          <input type="text" name="input-userName" id="input-userName" size="10">&nbsp;
+          <label for="input-userAge">Age:</label>
+          <input type="text" name="input-userAge" id="input-userAge" placeholder="YYYY-MM-DD" size="10">&nbsp;
+          <label for="input-userEmail">Email:</label>
+          <input type="text" name="input-userEmail" id="input-userEmail" size="15">&nbsp;
+          <button type="submit">Update</button>
+        </form>
+        <br>
+      <h3>Delete User</h3>
+        <form action="/users/delete" method="POST">
+          &nbsp;<label>UserID:</label>
+          <input type="number" name="userID" size="4" required>&nbsp;
+          <button type="submit">Delete</button>
+        </form>
+        <br>
+        <h3>Search User</h3>
+      <div style="display: flex;">
+        <form action="/users/search" id="/users/search" method="POST">
+          &nbsp;<label>UserID:</label>
+          <input type="number" name="input-userID" id="input-userID" size="4" required>&nbsp;
+          <button type="submit">Search</button>
+        </form>
+        <form action="/users/reset" id="/users/reset" method="POST">
+          <button type="submit">Reset</button>
+        </form>
+        </div>
+      <br><br></br>
+    </div>
+  </div>
+</body>
+
+</html>

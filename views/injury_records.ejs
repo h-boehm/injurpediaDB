@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <%- include ("partials/header.ejs") %>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+  
+<style>
+table, th, td {
+  border: 1px solid black;
+  text-align: center;
+}
+th, td {
+  padding: 6px;
+} 
+</style>
+
+<body>
+  <%- include ("partials/nav.ejs") %>
+  <div class="jumbotron text-center">
+    <div class="container">
+      <h1>Injury Records</h1>
+      <p>Add, update, or delete an injury record</p>
+    </div>
+  </div>
+  <div class="container">
+    <p>
+    Purpose: Intersection table for Records and Injuries.
+    <br></br>
+    Attributes: recordID (FK), injuryID (FK)
+    <br></br>
+    Relationship: M:M between Records and Injuries, implemented with an intersection table containing two FKs.
+    </p>
+    <hr>
+    <div>
+      <h3>Injury Records</h3>
+      <table>
+        <thead>
+          <tr>
+			      <th>RecordID</th>
+			      <th>InjuryID</th>
+        	</tr>
+        </thead>
+        <tbody>
+          <% for(var i=0; i<injury_records.length; i++) {%>
+          <tr>
+            <td><%= injury_records[i].recordID %></td>
+            <td><%= injury_records[i].injuryID %></td>
+          </tr>
+          <% } %>
+  	    </tbody>
+  	    </table>
+        <br>
+      <h3>Add Injury Record</h3>
+        <form action="/injury_records/add" method="POST">
+          &nbsp;<label>RecordID:</label>
+          <input type="number" name="recordID" size="4" required>&nbsp;
+          <label>InjuryID:</label>
+          <input type="number" name="injuryID" size="4" required>&nbsp;
+          <button type="submit">Add</button>
+        </form>
+        <br>
+      <h3>Delete Injury Record</h3>
+        <form action="/injury_records/delete" method="POST">
+          &nbsp;<label>RecordID:</label>
+          <input type="number" name="recordID" size="4" required>&nbsp;
+          <button type="submit">Delete</button>
+        </form>
+      <br><br></br>
+    </div>
+  </div>
+</body>
+
+</html>

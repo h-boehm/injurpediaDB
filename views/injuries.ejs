@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <%- include ("partials/header.ejs") %>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+  
+<style>
+table, th, td {
+  border: 1px solid black;
+  text-align: center;
+}
+th, td {
+  padding: 6px;
+} 
+</style>
+
+<body>
+  <%- include ("partials/nav.ejs") %>
+  <div class="jumbotron text-center">
+    <div class="container">
+      <h1>Injuries</h1>
+      <p>Add, update, or delete an injury</p>
+    </div>
+  </div>
+  <div class="container">
+    <p>
+    Purpose: Stores a list of approximately 80 injuries and their attributes.
+    <br></br>
+    Attributes: injuryID, injuryName, injuryGuide, subpartID (FK)
+    <br></br>
+    Relationships: 1:M between SubParts and Injuries, with subpartID as an FK inside Injuries.
+    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    M:M between Records and Injuries, implemented with an intersection table containing two FKs.
+    </p>
+    <hr>
+    <div>
+      <h3>Injuries</h3>
+        <table>
+          <thead>
+            <tr>
+		  	      <th>InjuryID</th>
+		  	      <th>Name</th>
+              <th>Guide</th>
+              <th>SubPartID</th>
+        	  </tr>
+          </thead>
+          <tbody>
+            <% for(var i=0; i<injuries.length; i++) {%>
+            <tr>
+              <td><%= injuries[i].injuryID %></td>
+              <td><%= injuries[i].injuryName %></td>
+              <td><%= injuries[i].injuryGuide %></td>
+              <td><%= injuries[i].subpartID %></td>
+            </tr>
+            <% } %>
+  	      </tbody>
+  	    </table>
+        <br>
+      <h3>Add Injury</h3>
+        <form action="/injuries/add" method="POST">
+          &nbsp;<label>Name:</label>
+          <input type="text" name="injuryName" size="10" required>&nbsp;
+          <label>Guide:</label>
+          <input type="text" name="injuryGuide" size="15" required>&nbsp;
+          <label>SubPartID:</label>
+          <input type="number" name="subpartID" size="4" required>&nbsp;
+          <button type="submit">Add</button>
+        </form>
+      <br>
+      <h3>Update Injury</h3>
+        <form id="/injuries/update" action="/injuries/update" method="POST">
+          &nbsp;<label for="input-injuryID">InjuryID:</label>
+          <input type="number" name="input-injuryID" id="input-injuryID" size="4">&nbsp;
+          <label for="input-injuryName">Name:</label>
+          <input type="text" name="input-injuryName" id="input-injuryName" size="10">&nbsp;
+          <label for="input-injuryGuide">Guide:</label>
+          <input type="text" name="input-injuryGuide" id="input-injuryGuide" size="15">&nbsp;
+          <label for="input-subpartID">SubPartID:</label>
+          <input type="number" name="input-subpartID" id="input-subpartID" size="4">&nbsp;
+          <button type="submit">Update</button>
+        </form>
+        <br>
+      <h3>Delete Injury</h3>
+        <form action="/injuries/delete" method="POST">
+          &nbsp;<label>InjuryID:</label>
+          <input type="number" name="injuryID" size="4" required>&nbsp;
+          <button type="submit">Delete</button>
+        </form>
+      <br><br></br>
+    </div>
+  </div>
+</body>
+
+</html>

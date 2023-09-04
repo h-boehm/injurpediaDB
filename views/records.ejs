@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <%- include ("partials/header.ejs") %>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+  
+<style>
+table, th, td {
+  border: 1px solid black;
+  text-align: center;
+}
+th, td {
+  padding: 6px;
+} 
+</style>
+  
+<body>
+  <%- include ("partials/nav.ejs") %>
+  <div class="jumbotron text-center">
+    <div class="container">
+      <h1>Records</h1>
+      <p>Add, update, or delete a record</p>
+    </div>
+  </div>
+  <div class="container">
+    <p>
+    Purpose: For recording details of user injuries; for user reference, and for statistical analysis.
+    <br></br>
+    Attributes: recordID, userID (FK), recordDate, recordNotes
+    <br></br>
+    Relationships: 1:M between Users and Records, with userID as an FK inside Records.
+    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    M:M between Records and Injuries, implemented with an intersection table containing two FKs.
+    </p>
+    <hr>
+    <div>
+      <h3>Records</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>RecordID</th>
+              <th>UserID</th>
+              <th>Date</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for(var i=0; i<records.length; i++) {%>
+            <tr>
+              <td><%= records[i].recordID %></td>
+              <td><%= records[i].userID %></td>
+              <td><%= records[i].recordDate %></td>
+              <td><%= records[i].recordNotes %></td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+        <br>
+      <h3>Add Record</h3>
+        <form action="/records/add" method="POST">
+          &nbsp;<label>UserID:</label>
+          <input type="number" name="userID" size="4" required>&nbsp;
+          <label>Date:</label>
+          <input type="text" placeholder="YYYY-MM-DD" name="recordDate" size="10" required>&nbsp;
+          <label>Notes:</label>
+          <input type="text" name="recordNotes" size="18">&nbsp;
+          <button type="submit">Submit</button>
+        </form>
+        <br>
+        <h3>Update Record</h3>
+          <form id="/records/update" action="/records/update" method="POST">
+          &nbsp;<label for="input-recordID">RecordID:</label>
+            <input type="number" name="input-recordID" id="input-recordID" size="4" required>&nbsp;
+            <label for="input-userID">UserID:</label>
+            <input type="number" name="input-userID" id="input-userID" size="4">&nbsp;
+            <label for="input-recordDate">Date:</label>
+            <input type="text" name="input-recordDate" id="input-recordDate" placeholder="YYYY-MM-DD" size="10">&nbsp;
+            <label for="input-recordNotes">Notes:</label>
+            <input type="text" name="input-recordNotes" id="input-recordNotes" size="18">&nbsp;
+            <button type="submit">Update</button>
+          </form>
+        <br>
+      <h3>Delete Record</h3>
+        <form action="/records/delete" method="POST">
+          &nbsp;<label>RecordID:</label>
+          <input type="number" name="recordID" size="4" required>&nbsp;
+          <button type="submit">Delete</button>
+        </form>
+      <br><br></br>
+    </div>
+  </div>
+</body>
+
+</html>

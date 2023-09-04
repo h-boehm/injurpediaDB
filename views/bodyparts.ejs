@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <%- include ("partials/header.ejs") %>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+
+<style>
+table, th, td {
+  border: 1px solid black;
+  text-align: center;
+}
+th, td {
+  padding: 6px;
+}
+</style>
+
+<body>
+  <%- include ("partials/nav.ejs") %>
+  <div class="jumbotron text-center">
+    <div class="container">
+      <h1>BodyParts</h1>
+      <p>Add, update, or delete a bodypart</p>
+    </div>
+  </div>
+  <div class="container">
+    <p>
+    Purpose: Stores the six primary categories of the body (head, neck, chest, abdomen, arm, leg). Aids in database organization.
+    <br></br>
+    Attributes: bodypartID, bodypartName, subpartID (FK)
+    <br></br>
+    Relationship: 1:M between BodyParts and SubParts, with bodypartID as an FK inside SubParts.
+    </p>
+    <hr>
+    <div>
+    <h3>BodyParts</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>BodyPartID</th>
+          <th>Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for(var i=0; i<bodyParts.length; i++) {%>
+        <tr>
+          <td><%= bodyParts[i].bodypartID %></td>
+          <td><%= bodyParts[i].bodypartName %></td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+    <br>
+    <h3>Add BodyPart</h3>
+      <form action="/bodyparts/add" method="POST">
+        &nbsp;<label>Name:</label>
+        <input type="text" name="bodypartName" size="10" required>&nbsp;
+        <button type="submit">Add</button>
+      </form>
+      <br>
+    <h3>Update BodyPart</h3>
+      <form id="/bodyparts/update" action="/bodyparts/update" method="POST">
+        <label for="input-bodypartID">BodyPartID:</label>
+        <input type="text" name="input-bodypartID" id="input-bodypartID" size="4" required>&nbsp;
+        <label for="input-bodypartName">Name:</label>
+        <input type="text" name="input-bodypartName" id="input-bodypartName" size="10">
+        <button type="submit">Update</button>
+      </form>
+    <br>
+    <h3>Delete BodyPart</h3>
+      <form action="/bodyparts/delete" method="POST">
+        &nbsp;<label>BodyPartID:</label>
+        <input type="number" name="bodyPartID" size="4" required>&nbsp;
+        <button type="submit">Delete</button>
+      </form>
+      <br><br></br>
+    </div>
+  </div>
+</body>
+
+</html>
